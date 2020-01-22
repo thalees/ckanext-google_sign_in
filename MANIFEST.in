@@ -1,0 +1,4 @@
+include README.rst
+include LICENSE
+include requirements.txt
+recursive-include ckanext/google_sign_in *.html *.json *.js *.less *.css *.mo
