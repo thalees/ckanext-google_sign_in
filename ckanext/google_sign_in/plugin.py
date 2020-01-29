@@ -14,14 +14,14 @@ import ckan.lib.helpers as helpers
 import requests
 import re
 
-#get 'ckan.googleauth_clientid' from ini file
+# get 'GOOGLE__AUTH__KEY' from .env file
 def get_client_id():
-    return config.get('ckan.googleauth_clientid', '')
+    return os.environ.get('GOOGLE__AUTH__KEY', '')
 
 
-#get ckan.googleauth_hosted_domain from ini file
+# get 'GOOGLE__HOSTED__DOMAIN' from .env file
 def get_hosted_domain():
-    return config.get('ckan.googleauth_hosted_domain', '')
+    return os.environ.get('GOOGLE__HOSTED__DOMAIN', '')
 
 
 def omit_domain():
@@ -64,14 +64,14 @@ class Google_Sign_InPlugin(plugins.SingletonPlugin, DefaultTranslation):
         toolkit.add_public_directory(config_, 'public')
         toolkit.add_resource('fanstatic', 'google_sign_in')
 
-        #declare new helper functions
+    # declare new helper functions
     def get_helpers(self):
         return {
-            'googleauth_get_clientid': get_clientid,
+            'googleauth_get_client_id': get_client_id,
 		    'googleauth_get_hosted_domain': get_hosted_domain
         }
 
-    #verify email address within token
+    # verify email address within token
     def verify_email(self, token):
         res = requests.post('https://www.googleapis.com/oauth2/v3/tokeninfo?id_token=' + token, verify=True)
         
